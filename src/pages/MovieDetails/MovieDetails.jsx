@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import movieDetailsApi from '../../services/api-movieDetails';
 
 export const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
+  // console.log('откуда пришел пользователь',location.state.from)
 
   const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
   const { movieId } = useParams();
@@ -21,6 +24,7 @@ export const MovieDetails = () => {
   return (
     movie && (
       <>
+        <Link to={backLinkHref}>Go back</Link>
         <div
           style={{
             display: 'flex',

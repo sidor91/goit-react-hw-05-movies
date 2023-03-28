@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import movieSearchApi from '../../services/api-searchMovie';
 
 export const Movies = () => {
     const [query, setQuery] = useState('');
     const [searchResult, setSearchResult] = useState(null)
+    const location = useLocation();
 
     useEffect(() => {
         if (query === '') {
@@ -33,7 +34,7 @@ export const Movies = () => {
           <ul>
             {searchResult.map(movie => (
               <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+                <Link to={`/movies/${movie.id}`} state={{from: location}}>{movie.title}</Link>
               </li>
             ))}
           </ul>
