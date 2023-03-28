@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import movieDetailsApi from '../../services/api-movieDetails';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
@@ -51,6 +51,8 @@ export const MovieDetails = () => {
     )
   );
 };
+
+export default MovieDetails;
 
 
 // poster_path

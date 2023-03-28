@@ -1,6 +1,6 @@
 import { Outlet, NavLink } from 'react-router-dom';
 
-export const SharedLayout = () => {
+const SharedLayout = () => {
     return (
       <div>
         <header>
@@ -26,3 +26,5 @@ export const SharedLayout = () => {
       </div>
     );
 }
+
+export default SharedLayout;

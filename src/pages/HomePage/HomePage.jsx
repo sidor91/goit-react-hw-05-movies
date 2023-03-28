@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import theMostPopularApi from '../../services/api-theMostPopular';
 
-export const HomePage = () => {
+const HomePage = () => {
   const [movieList, setMovieList] = useState(null);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -33,3 +33,5 @@ export const HomePage = () => {
 
   return <div>{error === null ? moviesMarkup : <h2>{error.message}</h2>}</div>;
 };
+
+export default HomePage;

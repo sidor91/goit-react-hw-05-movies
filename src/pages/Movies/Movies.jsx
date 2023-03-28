@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import movieSearchApi from '../../services/api-searchMovie';
 
-export const Movies = () => {
+ const Movies = () => {
     const [query, setQuery] = useState('');
     const [searchResult, setSearchResult] = useState(null)
     const location = useLocation();
@@ -41,4 +41,6 @@ export const Movies = () => {
         )}
       </>
     );
-};
+ };
+
+export default Movies;
