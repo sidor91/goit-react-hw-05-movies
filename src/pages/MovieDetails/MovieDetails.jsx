@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import movieDetailsApi from '../../services/api-movieDetails';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
-  // console.log('откуда пришел пользователь',location.state.from)
+  const backLinkHref = useRef(location.state?.from ?? '/');
+  // console.log('location на MovieDetails', location.state.from);
 
   const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
   const { movieId } = useParams();
@@ -15,7 +15,7 @@ const MovieDetails = () => {
     movieDetailsApi(movieId)
       .then(response => {
         setMovie(response);
-        console.log('movie details data',response);
+        // console.log('movie details data',response);
       })
       .catch(error => console.log(error.message));
   }, [movieId]);
@@ -24,7 +24,7 @@ const MovieDetails = () => {
   return (
     movie && (
       <>
-        <Link to={backLinkHref}>Go back</Link>
+        <Link to={backLinkHref.current}>Go back</Link>
         <div
           style={{
             display: 'flex',
@@ -46,7 +46,9 @@ const MovieDetails = () => {
             <Link to="reviews">Reviews</Link>
           </li>
         </ul>
-        <Outlet />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Outlet />
+        </Suspense>
       </>
     )
   );
