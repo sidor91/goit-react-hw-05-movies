@@ -24,4 +24,5 @@ export const StyledHeader = styled.header`
 export const StyledMain = styled.main`
 padding-left: 20px;
 padding-right: 20px;
+padding-bottom: 20px;
 `
