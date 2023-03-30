@@ -1,31 +1,36 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
+import {
+  NavigationLink,
+  StyledHeader,
+  StyledMain,
+} from './SharedLayout.styled';
 
 const SharedLayout = () => {
     return (
       <div>
-        <header>
+        <StyledHeader>
           <nav>
-            <ul
-              style={{
-                display: 'flex',
-                listStyle: 'none',
-              }}
-            >
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/movies">Movies</NavLink>
-              </li>
-            </ul>
+            <NavigationLink to="/">Home</NavigationLink>
+            <NavigationLink to="/movies">Movies</NavigationLink>
           </nav>
-        </header>
-        <main>
-          <Suspense fallback={<div>Loading...</div>}>
+        </StyledHeader>
+        <StyledMain>
+          <Suspense
+            fallback={
+              <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="96"
+                visible={true}
+              />
+            }
+          >
             <Outlet />
           </Suspense>
-        </main>
+        </StyledMain>
       </div>
     );
 }

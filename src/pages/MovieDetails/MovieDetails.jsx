@@ -1,12 +1,23 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
+import { RotatingLines } from 'react-loader-spinner';
 import movieDetailsApi from '../../services/api-movieDetails';
+import {
+  Poster,
+  Text,
+  Title,
+  SubTitle,
+  NavigationLink,
+  AdditionalInfo,
+} from './MovieDetails.styled';
+
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
+  const [error, setError] = useState(null);
   const location = useLocation();
   const backLinkHref = useRef(location.state?.from ?? '/');
-  // console.log('location на MovieDetails', location.state.from);
 
   const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
   const { movieId } = useParams();
@@ -15,38 +26,55 @@ const MovieDetails = () => {
     movieDetailsApi(movieId)
       .then(response => {
         setMovie(response);
-        // console.log('movie details data',response);
       })
-      .catch(error => console.log(error.message));
+      .catch(error => setError(error.message));
   }, [movieId]);
 
-
-  return (
+  return error ? (
+    <h2>{error}</h2>
+  ) : (
     movie && (
       <>
-        <Link to={backLinkHref.current}>Go back</Link>
+        <NavigationLink to={backLinkHref.current}>← Go back</NavigationLink>
         <div
           style={{
             display: 'flex',
           }}
         >
-          <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt="" />
+          <Poster src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt="" />
           <div>
-            <h2>
-              {movie.title} {movie.release_date}
-            </h2>
+            <Title>
+              {movie.title} ({format(parseISO(movie.release_date), 'yyyy')})
+            </Title>
+            <Text>User score: {Math.floor(movie.vote_average * 10)}%</Text>
+            <SubTitle>Overview</SubTitle>
+            <Text>{movie.overview}</Text>
+            <SubTitle>Genres</SubTitle>
+            <Text>{movie.genres.map(genre => `${genre.name} `)}</Text>
           </div>
         </div>
-        <h6>Addititonal information</h6>
-        <ul>
-          <li>
-            <Link to="cast">Cast</Link>
-          </li>
-          <li>
-            <Link to="reviews">Reviews</Link>
-          </li>
-        </ul>
-        <Suspense fallback={<div>Loading...</div>}>
+        <AdditionalInfo>
+          <SubTitle>Addititonal information</SubTitle>
+          <ul>
+            <li>
+              <NavigationLink to="cast">Cast</NavigationLink>
+            </li>
+            <li>
+              <NavigationLink to="reviews">Reviews</NavigationLink>
+            </li>
+          </ul>
+        </AdditionalInfo>
+        <Suspense
+          fallback={
+            <RotatingLines
+              strokeColor="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="96"
+              visible={true}
+            />
+          }
+        >
           <Outlet />
         </Suspense>
       </>
@@ -55,11 +83,3 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
-
-
-// poster_path
-// title
-// release_date
-// vote_average
-// overview
-// genres (может массив)

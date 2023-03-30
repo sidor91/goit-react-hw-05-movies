@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import theMostPopularApi from '../../services/api-theMostPopular';
+import { MovieLink, List, ListItem, Title } from './HomePage.styled';
 
 const HomePage = () => {
   const [movieList, setMovieList] = useState(null);
@@ -15,21 +16,19 @@ const HomePage = () => {
 
   const moviesMarkup = (
     <>
-      <h1>Trending today</h1>
-      <ul>
+      <Title>Trending today</Title>
+      <List>
         {movieList &&
           movieList.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`} state={{ from: location }}>
+            <ListItem key={id}>
+              <MovieLink to={`/movies/${id}`} state={{ from: location }}>
                 {title}
-              </Link>
-            </li>
+              </MovieLink>
+            </ListItem>
           ))}
-      </ul>
+      </List>
     </>
   );
-
-  // console.log('movieList', movieList);
 
   return <div>{error === null ? moviesMarkup : <h2>{error.message}</h2>}</div>;
 };

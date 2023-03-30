@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import movieSearchApi from '../../services/api-searchMovie';
+import { List, MovieLink } from './Movies.styled';
 
 const Movies = () => {
   const [searchResult, setSearchResult] = useState(null);
@@ -46,15 +47,15 @@ const Movies = () => {
         </form>
       </div>
       {searchResult && (
-        <ul>
+        <List>
           {searchResult.map(movie => (
             <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+              <MovieLink to={`/movies/${movie.id}`} state={{ from: location }}>
                 {movie.title}
-              </Link>
+              </MovieLink>
             </li>
           ))}
-        </ul>
+        </List>
       )}
     </>
   );
