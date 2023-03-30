@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 import theMostPopularApi from '../../services/api-theMostPopular';
-import { MovieLink, List, ListItem, Title } from './HomePage.styled';
+import { List, Title } from './HomePage.styled';
 
 const HomePage = () => {
   const [movieList, setMovieList] = useState(null);
@@ -20,11 +20,11 @@ const HomePage = () => {
       <List>
         {movieList &&
           movieList.map(({ id, title }) => (
-            <ListItem key={id}>
-              <MovieLink to={`/movies/${id}`} state={{ from: location }}>
+            <li key={id}>
+              <Link to={`/movies/${id}`} state={{ from: location }}>
                 {title}
-              </MovieLink>
-            </ListItem>
+              </Link>
+            </li>
           ))}
       </List>
     </>

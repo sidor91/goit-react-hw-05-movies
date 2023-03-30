@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams, Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { RotatingLines } from 'react-loader-spinner';
 import movieDetailsApi from '../../services/api-movieDetails';
@@ -8,8 +8,9 @@ import {
   Text,
   Title,
   SubTitle,
-  NavigationLink,
   AdditionalInfo,
+  NavigationLink,
+  List,
 } from './MovieDetails.styled';
 
 
@@ -55,14 +56,14 @@ const MovieDetails = () => {
         </div>
         <AdditionalInfo>
           <SubTitle>Addititonal information</SubTitle>
-          <ul>
+          <List>
             <li>
-              <NavigationLink to="cast">Cast</NavigationLink>
+              <Link to="cast">Cast</Link>
             </li>
             <li>
-              <NavigationLink to="reviews">Reviews</NavigationLink>
+              <Link to="reviews">Reviews</Link>
             </li>
-          </ul>
+          </List>
         </AdditionalInfo>
         <Suspense
           fallback={

@@ -23,19 +23,14 @@ export const NavigationLink = styled(Link)`
   color: black;
   text-decoration: none;
   font-size: 24px;
-
-  li & {
-    color: blue;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    text-decoration: underline;
-  }
 `;
 
 export const AdditionalInfo = styled.div`
 margin-top: 10px;
 border-top: 1px solid black;
 border-bottom: 1px solid black;
+`
+
+export const List = styled.ul`
+font-size: 24px;
 `
