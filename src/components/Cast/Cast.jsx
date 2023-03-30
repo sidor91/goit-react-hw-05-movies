@@ -12,7 +12,6 @@ const Cast = () => {
     movieCastApi(movieId)
       .then(response => {
           setCast(response);
-          console.log('response', response)
       })
       .catch(error => setError(error.message));
   }, [movieId]);
