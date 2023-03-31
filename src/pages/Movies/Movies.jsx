@@ -11,7 +11,7 @@ const Movies = () => {
   const request = searchParams.get('query') ?? '';
 
   useEffect(() => {
-    if (request === null) {
+    if (request === '') {
       return;
     }
     movieSearchApi(request)
